@@ -17,3 +17,5 @@ yarn-error.log*
 .*.sw*
 
 data/
+*.sqlite3
+*.bak
