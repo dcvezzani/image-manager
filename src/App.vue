@@ -3,6 +3,7 @@
 
     <div class="router-links">
       <router-link to="/Photos">Photos</router-link>
+      <router-link to="/Photo/1">Photo</router-link>
     </div>
     
     <router-view/>
@@ -10,17 +11,23 @@
 </template>
 
 <script>
+import tinyToast from 'tiny-toast'
+
 export default {
   name: 'App', 
-  sockets:{
-    connect: function(){
+  sockets: {
+    connect: function () {
       console.log('socket connected')
-      this.$socket.emit('join', {server: true});
+      this.$socket.emit('join', {server: true, greeting: 'Greetings server'})
     },
-    joined: function(msg){
-      console.log('socket-in:joined:', msg);
+    joined: function (msg) {
+      console.log('socket-in:joined:', msg)
     },
-  }, 
+    err: function (data) {
+      console.log('Socket IO Error', data)
+      tinyToast.show('Socket IO Error').hide(3000)
+    }
+  }
 }
 </script>
 

@@ -1,10 +1,7 @@
 <template>
-  <div class="photos container">
-    
-    <router-link v-for="photo in photos" :to="photoRoute(photo.id)" :key="photo.id">
-      <img :src="photo.location" :alt="photo.name" class="thumbnail">
-    </router-link>
-    
+  <div class="photo container">
+    <p>photo: {{id}}</p>
+    <img v-if="photo" :src="photo.location" :alt="photo.name">
   </div>
 </template>
 
@@ -13,30 +10,35 @@ import tinyToast from 'tiny-toast'
 import { uuidv4 } from '../lib/utils'
 
 export default {
-  name: 'Photos',
+  name: 'Photo',
+  props: ['id'], 
   data () {
     return {
       msg: 'Welcome to Your Vue.js App', 
-      photos: [],
+      photo: null,
+      // responseQueue: {},
     }
   }, 
   methods:{
     test: function(){}, 
-    photoRoute: function(id){
-      return { name: 'Photo', params: {id} }
+    test: function(){
+      console.log("test");
+
+      // const uuid = uuidv4()
+      // const self = this
+      // this.responseQueue[uuid] = () => {
+      //   console.log('photo was fetched', data)
+      //   self.photos = data.payload;
+      // }
     }, 
-  }, 
+  },
   sockets:{
-    'db:photos:index-done': function(data){
-      console.log('index was fetched', data)
-      this.photos = data.payload;
-    },
     'db:photos:done': function(resp){
       const uuid = uuidv4()
       switch (resp.action) {
-        case 'index': {
-          console.log('index was fetched', resp)
-          this.photos = resp.payload;
+        case 'show': {
+          console.log('photo was fetched', resp)
+          this.photo = resp.payload;
           tinyToast.show('Photo was fetched').hide(3000)
           break
         }
@@ -46,7 +48,7 @@ export default {
     },
   }, 
   mounted () {
-    this.$socket.emit('db:photos', {action: 'index', asdf: true});
+    this.$socket.emit('db:photos', {action: 'show', payload: this.id})
   }, 
 }
 </script>

@@ -5701,6 +5701,10 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+"tiny-toast@https://github.com/dcvezzani/tiny-toast.git":
+  version "0.0.0-semantic-release"
+  resolved "https://github.com/dcvezzani/tiny-toast.git#8ab63c4ab8ca85aea91a0910a3af92da8e82e090"
+
 to-array@0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/to-array/-/to-array-0.1.4.tgz#17e6c11f73dd4f3d74cda7a4ff3238e9ad9bf890"
